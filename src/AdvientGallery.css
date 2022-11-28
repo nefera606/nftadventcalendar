@@ -1,9 +1,0 @@
-.cover {
-  background-color: aqua;
-  height: 30px;
-  width: 30px;
-}
-
-.cover:hover {
-  transform: scale(5);
-}

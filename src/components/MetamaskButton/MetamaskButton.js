@@ -14,7 +14,7 @@ function MetamaskButton() {
 
   if (status === "connecting") return (<div>Connecting...</div>)
 
-  if (status === "connected") return (<div>Connected account {account} on chain ID {chainId}</div>)
+  if (status === "connected") return (<div style={{'backgroundColor': 'white'}}>Connected account {account} on chain ID {chainId}</div>)
 
   return null;
 }

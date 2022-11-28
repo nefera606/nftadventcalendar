@@ -1,0 +1,12 @@
+.App {
+  background-repeat:repeat;
+}
+
+.frame {
+  padding: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  height: auto;
+  background-color: rgba(163, 163, 163, 0.45);
+}
