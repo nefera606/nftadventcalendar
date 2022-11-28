@@ -10,17 +10,20 @@ function MetamaskButton() {
 
   
 
-  if (status === "initializing") return (<div>Synchronisation with MetaMask ongoing...</div>)
+  if (status === "initializing") return (<div div style={{'backgroundColor': 'white'}}>Synchronisation with MetaMask ongoing...</div>)
 
-  if (status === "unavailable") return (<div>MetaMask not available</div>)
+  if (status === "unavailable") return (<div div style={{'backgroundColor': 'white'}}>MetaMask not available</div>)
 
   if (status === "notConnected") return (<Button onClick={connect} variant="contained">Connect metamask</Button>)
 
-  if (status === "connecting") return (<div>Connecting...</div>)
+  if (status === "connecting") return (<div style={{'backgroundColor': 'white'}}>Connecting...</div>)
 
   if (status === "connected") {
-    trigger('statusChange', status)
-    return (<div style={{'backgroundColor': 'white'}}>Connected account {account} on chain ID {chainId}</div>)
+    if(chainId == '0x5'){
+      trigger('statusChange', status)
+      return (<div style={{'backgroundColor': 'white'}}>Connected account {account} on chain ID {chainId}</div>)
+    }
+    return (<div style={{'backgroundColor': 'white'}}>Please connect to goerli</div>)
   }
 
   return null;
