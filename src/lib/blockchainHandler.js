@@ -62,7 +62,6 @@ const claimStatus = async (index) => {
   const web3 = new Web3(Web3.givenProvider);
   const nft = new web3.eth.Contract(abi, NftAddress());
   const accounts = await web3.eth.getAccounts();
-  console.log(index)
   return await nft.methods.claimed(index, accounts[0]).call()
 }
 

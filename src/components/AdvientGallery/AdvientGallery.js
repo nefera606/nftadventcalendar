@@ -57,7 +57,7 @@ function AdvientGallery() {
       let uris = [];
       let borders = [];
       for(const round in rounds)
-      { 
+      {
         let status = await claimStatus(round);
         let uri = await getRoundUri(round);
         let border = await getBorder(round);
@@ -81,10 +81,10 @@ function AdvientGallery() {
         if(!status && isToday(parsed) && claimable) {
           return "sparkling buzz-out-on-hover"
         }
-        if(border === 2) {
+        if(border === '2') {
           return "backimg-g"
         }
-        if(border === 1) {
+        if(border === '1') {
           return "backimg-e"
         }
         return "backimg"
@@ -118,10 +118,11 @@ function AdvientGallery() {
       let round = differenceInCalendarDays(
         Date.now(),
         baseDate
-      )+1;
+      );
       await claim(setClaimable);
       let uri = await getRoundUri(round);
       let border = await getBorder(round);
+      console.log(border)
       nft.nftClaimed = true;
       nft.nftImage = uri;
       nft.nftBorder = border;
@@ -130,8 +131,8 @@ function AdvientGallery() {
       setNftList(_nftList);
     }
     if(nft.nftClaimed) {
-      let borders = ['modalImage','modalImage-e','modalImage-p']
-      setModalClass(borders[nft.nftBorder])
+      let bordersType = ['modalImage','modalImage-e','modalImage-p']
+      setModalClass(bordersType[nft.nftBorder])
       setModalImage(nft.nftImage);
       setOpen(true);
     }
