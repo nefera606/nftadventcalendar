@@ -65,7 +65,6 @@ function AdvientGallery() {
         statuses.push(status);
         borders.push(border);
       }
-      console.log(statuses)
       const getImage = (date, index) => {
         let parsed = parse(date,'dd-MMM', new Date());
         if(isFuture(parsed) || (isToday(parsed) && claimable)) {
@@ -105,7 +104,6 @@ function AdvientGallery() {
           nftBorder: borders[i]
         }
       });
-      console.log(sortedList)
       const nftRandom = randomList.map((randomIndex) => {
         return sortedList[randomIndex]
       })
