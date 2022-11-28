@@ -16,8 +16,8 @@ import Dialog from '@mui/material/Dialog';
 
 function AdvientGallery() {
 
-  const baseDate = new Date(2022, 10, 28)
-  const endDate = new Date(2022, 11, 24)
+  const baseDate = new Date(2022, 10, 28, 17)
+  const endDate = new Date(2022, 11, 24, 17)
 
   const [ claimable, setClaimable] = useState(false);
   const [ randomList, setRandomList ] = useState([]);
