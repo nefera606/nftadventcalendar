@@ -23,11 +23,11 @@ function TodayNftCounter(props) {
      <p>Daily available tokens:  <b>{data.DailySupply} ({data.NSupply}N / {data.ESupply}E / {data.GSupply}P)</b></p>
      <p>Remeber, you can receive one of three class of token when you claim:</p>
      <il>
-      <ul>Normal</ul>
-      <ul>Especial</ul>
-      <ul>Pro</ul>
+      <ul>Normal -> Black border</ul>
+      <ul>Especial -> Blue border</ul>
+      <ul>Pro -> Orange border</ul>
      </il>
-     <p>Find yours today!</p>
+     <p>Find yours today and Merry Christmas!</p>
     </div>)
 
 }
