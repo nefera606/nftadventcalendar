@@ -68,10 +68,10 @@ function AdvientGallery() {
         borders.push(border);
       }
 
-      let today = set(Date().now(),{hours: 17});
+      let today = set(Date.now(),{hours: 17});
       
       const getImage = (date, index) => {
-        let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date().now())}`});
+        let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date.now())}`});
         if(!isBefore(parsed, today) && claimable) {
           return "/notClaimed.png";
         }
@@ -79,7 +79,7 @@ function AdvientGallery() {
       }
     
       const getClass = (date,status,border) => {
-        let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date().now())}`});
+        let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date.now())}`});
         if(!status && isBefore(parsed, today)) {
           return "black-and-white"
         }
