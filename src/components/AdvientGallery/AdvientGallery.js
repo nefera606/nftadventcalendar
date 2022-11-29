@@ -81,10 +81,11 @@ function AdvientGallery() {
     
       const getClass = (date,status,border) => {
         if(!status && isBefore(date, today)) {
-          return "black-and-white"
-        }
-        if(!status && isToday(date) && claimable) {
-          return "sparkling buzz-out-on-hover"
+          if(claimable) {
+            return "sparkling buzz-out-on-hover"
+          } else {
+            return "black-and-white"
+          }
         }
         if(border === '2') {
           return "backimg-g"
