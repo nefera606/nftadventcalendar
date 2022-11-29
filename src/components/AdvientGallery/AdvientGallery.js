@@ -80,7 +80,7 @@ function AdvientGallery() {
       }
     
       const getClass = (date,status,border) => {
-        if(!status && isBefore(date, today)) {
+        if(!status && (isBefore(date, today)) || isToday(date) ){
           if(claimable) {
             return "sparkling buzz-out-on-hover"
           } else {
