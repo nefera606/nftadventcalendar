@@ -9,6 +9,8 @@ import format from 'date-fns/format'
 import isFuture from 'date-fns/isFuture'
 import parse from 'date-fns/parse'
 import Container from '@mui/material/Container';
+import set from 'date-fns/set'
+import isBefore from 'date-fns/isBefore'
 import { canClaim, claim, claimStatus, getRoundUri, getBorder } from '../../lib/blockchainHandler'
 import { TodayNftCounter } from '../TodayNftCounter/TodayNftCounter';
 import Dialog from '@mui/material/Dialog';
@@ -65,9 +67,12 @@ function AdvientGallery() {
         statuses.push(status);
         borders.push(border);
       }
+
+      let today = set(new Date().now(),{hours: 17});
+      
       const getImage = (date, index) => {
         let parsed = parse(date,'dd-MMM', new Date());
-        if(isFuture(parsed) || (isToday(parsed) && claimable)) {
+        if(!isBefore(parsed, today) && claimable) {
           return "/notClaimed.png";
         }
         return uris[index];
@@ -75,7 +80,7 @@ function AdvientGallery() {
     
       const getClass = (date,status,border) => {
         let parsed = parse(date,'dd-MMM', new Date());
-        if(!status && !(isFuture(parsed) || isToday(parsed))) {
+        if(!status && isBefore(parsed, today)) {
           return "black-and-white"
         }
         if(!status && isToday(parsed) && claimable) {
