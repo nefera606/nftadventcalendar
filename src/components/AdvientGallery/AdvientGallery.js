@@ -36,7 +36,7 @@ function AdvientGallery() {
       const base = Array.from({ length: differenceInCalendarDays(
         endDate,
         baseDate
-      )+1 }, (v, i) => i)
+      )+1}, (v, i) => i)
       const randomList = Array.from({length: base.length}, () => {
         let index = Math.floor(Math.random() * base.length)
         let value = base[index];
@@ -53,7 +53,7 @@ function AdvientGallery() {
       const rounds = Array.from({ length: differenceInCalendarDays(
         Date.now(),
         baseDate
-      )+1 }, (v, i) => i)
+      ) }, (v, i) => i)
       let statuses = [];
       let uris = [];
       let borders = [];
@@ -80,7 +80,7 @@ function AdvientGallery() {
       }
     
       const getClass = (date,status,border) => {
-        if(!status && (isBefore(date, today)) || isToday(date) ){
+        if(!status && isBefore(date, today)) {
           if(claimable) {
             return "sparkling buzz-out-on-hover"
           } else {
