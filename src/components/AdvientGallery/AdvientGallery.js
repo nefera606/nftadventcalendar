@@ -68,7 +68,7 @@ function AdvientGallery() {
         borders.push(border);
       }
 
-      let today = set(new Date().now(),{hours: 17});
+      let today = set(Date().now(),{hours: 17});
       
       const getImage = (date, index) => {
         let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date().now())}`});
