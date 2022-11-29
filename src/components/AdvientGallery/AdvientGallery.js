@@ -6,7 +6,7 @@ import eachDayOfInterval from 'date-fns/eachDayOfInterval'
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import isToday from 'date-fns/isToday'
 import format from 'date-fns/format'
-import isFuture from 'date-fns/isFuture'
+import getHours from 'date-fns/getHours'
 import parse from 'date-fns/parse'
 import Container from '@mui/material/Container';
 import set from 'date-fns/set'
@@ -71,7 +71,7 @@ function AdvientGallery() {
       let today = set(new Date().now(),{hours: 17});
       
       const getImage = (date, index) => {
-        let parsed = parse(date,'dd-MMM', new Date());
+        let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date().now())}`});
         if(!isBefore(parsed, today) && claimable) {
           return "/notClaimed.png";
         }
@@ -79,7 +79,7 @@ function AdvientGallery() {
       }
     
       const getClass = (date,status,border) => {
-        let parsed = parse(date,'dd-MMM', new Date());
+        let parsed = set(parse(date,'dd-MMM', new Date()), {hours: `${getHours(Date().now())}`});
         if(!status && isBefore(parsed, today)) {
           return "black-and-white"
         }
