@@ -4,20 +4,17 @@ import { useState, useEffect } from 'react';
 import './AdvientGallery.css';
 import eachDayOfInterval from 'date-fns/eachDayOfInterval'
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
-import isToday from 'date-fns/isToday'
 import format from 'date-fns/format'
-import parse from 'date-fns/parse'
 import Container from '@mui/material/Container';
 import set from 'date-fns/set'
-import isBefore from 'date-fns/isBefore'
-import { canClaim, claim, claimStatus, getRoundUri, getBorder } from '../../lib/blockchainHandler'
+import { canClaim, claim, getRoundUri, getBorder } from '../../lib/blockchainHandler'
 import { TodayNftCounter } from '../TodayNftCounter/TodayNftCounter';
 import Dialog from '@mui/material/Dialog';
 
 
 function AdvientGallery() {
 
-  const baseDate = new Date(2022, 10, 28, 17)
+  const baseDate = new Date(2022, 11, 1, 17)
   const endDate = new Date(2022, 11, 24, 17)
 
   const [ claimable, setClaimable] = useState(false);
@@ -49,43 +46,41 @@ function AdvientGallery() {
   },[])
 
   useEffect(() => {
+    let currentRound = differenceInCalendarDays(
+      Date.now(),
+      baseDate
+    );
     const setUp = async () => {
-      const rounds = Array.from({ length: differenceInCalendarDays(
-        Date.now(),
-        baseDate
-      ) }, (v, i) => i)
+      const rounds = Array.from({ length: currentRound + 1}, (v, i) => i)
       let statuses = [];
       let uris = [];
       let borders = [];
       for(const round in rounds)
       {
-        let status = await claimStatus(round);
+        let status = await canClaim(round);
         let uri = await getRoundUri(round);
         let border = await getBorder(round);
         uris.push(uri);
         statuses.push(status);
         borders.push(border);
       }
-
-      let today = set(Date.now(),{hours: 16});
-      
-      const getImage = (date, index) => {
-        if(!isBefore(date, today)) {
+    
+      const getImage = (round, status) => {
+        if(round > currentRound) {
           return "/notClaimed.png";
         }
-        console.log(date)
-        console.log(today)
-        console.log(!isBefore(date, today))
-        return uris[index];
+        if(round === currentRound && !status){
+          return "/notClaimed.png";
+        }
+        return uris[round];
       }
-    
-      const getClass = (date,status,border) => {
-        if(!status && isBefore(date, today)) {
-          if(claimable) {
-            return "sparkling buzz-out-on-hover"
-          } else {
-            return "black-and-white"
-          }
+
+      const getClass = (round,status,border) => {
+        if(round === currentRound && !status) {
+          return "sparkling buzz-out-on-hover"
+        }
+        if(round < currentRound && !status) {
+          return "black-and-white"
         }
         if(border === '2') {
           return "backimg-g"
@@ -104,9 +99,10 @@ function AdvientGallery() {
         return {
           nftClaimed: statuses[i] ? true : false,
           nftDate: parsed,
+          nftRound: i,
           nftFormatDate: format(nftDate, 'dd-MMM'),
-          nftClass: getClass(parsed, statuses[i] ? true : false,borders[i]),
-          nftImage: getImage(parsed,i),
+          nftClass: getClass(i, statuses[i] ? true : false,borders[i]),
+          nftImage: getImage(i, statuses[i] ? true : false),
           nftBorder: borders[i]
         }
       });
@@ -119,16 +115,15 @@ function AdvientGallery() {
   }, [claimable, randomList]);
 
   const handleClaim = async (nft, index) => {
-    if((claimable && isToday(parse(nft.nftDate,'dd-MMM', new Date()))))
+    let currentRound = differenceInCalendarDays(
+      Date.now(),
+      baseDate
+    );
+    if(nft.nftClaimed === false && nft.nftRound <= currentRound)
     {
-      let round = differenceInCalendarDays(
-        Date.now(),
-        baseDate
-      );
-      await claim(setClaimable);
-      let uri = await getRoundUri(round);
-      let border = await getBorder(round);
-      console.log(border)
+      await claim(setClaimable, nft.nftRound);
+      let uri = await getRoundUri(nft.nftRound);
+      let border = await getBorder(nft.nftRound);
       nft.nftClaimed = true;
       nft.nftImage = uri;
       nft.nftBorder = border;

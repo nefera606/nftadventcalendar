@@ -25,7 +25,7 @@ function MetamaskButton() {
       setChainId(chainId);
       return (<div style={{'backgroundColor': 'white'}}>
         <p>Connected account {account} on chain ID {chainId} (if you change network, you must reload web)</p>
-        <p>Goerli <a href='https://goerlifaucet.com/'>faucet</a> if you need test gas</p>
+        <p>Goerli <a href='https://goerlifaucet.com/' target='_blanks'>faucet</a> if you need test gas</p>
         </div>)
     }
     return (<div style={{'backgroundColor': 'white'}}>Please connect to goerli for test or polygon for use</div>)
