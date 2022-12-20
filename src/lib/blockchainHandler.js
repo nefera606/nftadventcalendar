@@ -12,7 +12,7 @@ const setChainId = (id) => {
 const NftAddress = () => {
   if(chainId === '0x5') 
     {
-      return '0xa12c185C9C19643FA981f6e0B856283512758590'
+      return '0x893fcDb225d0652DfFd1366662d6FDD10584eeba'
     }
   if(chainId === '0x89') 
     {
