@@ -61,7 +61,7 @@ contract NftCalendar is ERC721{
     }
 
     function mintRound(uint256 _amount_n, uint256 _amount_e, uint256 _amount_p, string memory _ipfs) public {
-        require((lastDate > block.timestamp + 1 days)||preDateRounds>0, "no new round");
+        require(rounds < 25, "no more rounds");
         amount_n_round[rounds] = _amount_n;
         amount_e_round[rounds] = _amount_e;
         amount_p_round[rounds] = _amount_p;
