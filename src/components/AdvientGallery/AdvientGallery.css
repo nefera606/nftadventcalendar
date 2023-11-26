@@ -1,5 +1,5 @@
 .cover {
-  background-color: aqua;
+  backgroundColor: aqua;
   height: 120px;
   width: 110px;
   top: 20px;
@@ -9,7 +9,7 @@
 }
 
 .cover:hover {
-  background-color: rgb(255, 217, 0);
+  backgroundColor: rgb(255, 217, 0);
   transition: all 1s ease-out;
   transform: rotateY(90deg) translate(-110px);
 }
@@ -83,7 +83,7 @@
 .dateLabel {
   width: 210px;
   border-radius: 5px;
-  background-color: rgb(1, 134, 101);
+  backgroundColor: rgb(1, 134, 101);
   padding-left: 10px;
   color: white;
   margin-bottom: 10px;

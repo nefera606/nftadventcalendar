@@ -5,25 +5,21 @@ import {
 
 let chainId;
 
-const setChainId = (id) => {
+const setConnection = (id, _provider) => {
   chainId = id;
+  provider = _provider;
 }
 
-const NftAddress = () => {
-  if(chainId === '0x5') 
-    {
-      return '0x893fcDb225d0652DfFd1366662d6FDD10584eeba'
-    }
-  if(chainId === '0x89') 
-    {
-      return '0xe643Ee9d7516F956120E3A8C563037669e4d6CC4'
-    }
-  }
+const NftAddress = {
+  '0x5': '0x893fcDb225d0652DfFd1366662d6FDD10584eeba',
+  '0x89': '0xe643Ee9d7516F956120E3A8C563037669e4d6CC4'
+}
+
 
 const loadBlockChain = async (setData) => {
-  const web3 = new Web3(Web3.givenProvider);
+  const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
-  const nft = new web3.eth.Contract(abi, NftAddress());
+  const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
   const nftBalance = await nft.methods.balanceOf(accounts[0]).call()
   const nftRounds = await nft.methods.rounds().call()
   const amount_n = await nft.methods.amount_n().call()
@@ -42,10 +38,13 @@ const loadBlockChain = async (setData) => {
 
 const canClaim = async (_round) => {
   let round;
-  const web3 = new Web3(Web3.givenProvider);
-  const nft = new web3.eth.Contract(abi, NftAddress());
+ const web3 = new Web3(window.ethereum);
+ const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
   if(!_round){
-    round = await nft.methods.rounds().call() - 1;
+    round = await nft.methods.rounds().call();
+    console.log('AQUIIIII')
+    console.log(round)
+    round = 2
   } else {
     round = _round;
   }
@@ -55,8 +54,8 @@ const canClaim = async (_round) => {
 }
 
 const getBorder = async (round) => {
-  const web3 = new Web3(Web3.givenProvider);
-  const nft = new web3.eth.Contract(abi, NftAddress());
+ const web3 = new Web3(window.ethereum);
+ const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
   const accounts = await web3.eth.getAccounts();
   const tokenId = await nft.methods.claimedPerRound(round, accounts[0]).call()
   const border = await nft.methods.borderToken(tokenId).call()
@@ -64,8 +63,8 @@ const getBorder = async (round) => {
 }
 
 const claim = async (setData, round) => {
-  const web3 = new Web3(Web3.givenProvider);
-  const nft = new web3.eth.Contract(abi, NftAddress());
+ const web3 = new Web3(window.ethereum);
+ const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
   const accounts = await web3.eth.getAccounts();
   await nft.methods.claim(round).send({
       from: accounts[0]
@@ -76,8 +75,8 @@ const claim = async (setData, round) => {
 }
 
 const getRoundUri = async (round) => {
-  const web3 = new Web3(Web3.givenProvider);
-  const nft = new web3.eth.Contract(abi, NftAddress());
+ const web3 = new Web3(window.ethereum);
+ const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
   //const accounts = await web3.eth.getAccounts();
   //const roundId = await nft.methods.claimedPerRound(round, accounts[0]).call()
   const uri = await nft.methods.roundURI(round).call()
@@ -87,7 +86,7 @@ const getRoundUri = async (round) => {
 
 
 export {
-  setChainId,
+  setConnection,
   loadBlockChain,
   getBorder,
   canClaim,
