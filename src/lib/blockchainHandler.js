@@ -7,7 +7,6 @@ let chainId;
 
 const setConnection = (id, _provider) => {
   chainId = id;
-  provider = _provider;
 }
 
 const NftAddress = {
