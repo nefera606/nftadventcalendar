@@ -1,7 +1,3 @@
-# IPFS
-
-https://ipfsbrowser.com/?hash=QmQTB5vrJ3cvBAGA1LmmmKdqWX938RzvbXnpf3sziGwEce
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
