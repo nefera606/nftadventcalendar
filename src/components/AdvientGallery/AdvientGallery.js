@@ -14,8 +14,8 @@ import Dialog from '@mui/material/Dialog';
 
 function AdvientGallery() {
 
-  const baseDate = new Date(2023, 11, 10, 17)
-  const endDate = new Date(2023, 11, 27, 17)
+  const baseDate = new Date(2023, 10, 25, 17)
+  const endDate = new Date(2023, 10, 26, 17)
 
   const [ claimable, setClaimable] = useState(false);
   const [ randomList, setRandomList ] = useState([]);
@@ -64,7 +64,7 @@ function AdvientGallery() {
         statuses.push(status);
         borders.push(border);
       }
-    
+      
       const getImage = (round, status) => {
         if(round > currentRound) {
           return "/notClaimed.png";
@@ -72,7 +72,7 @@ function AdvientGallery() {
         if(round === currentRound && !status){
           return "/notClaimed.png";
         }
-        return uris[round];
+        return `/${uris[round]}.png`;
       }
 
       const getClass = (round,status,border) => {
