@@ -1,5 +1,5 @@
 .cover {
-  backgroundColor: aqua;
+  background-color: aqua;
   height: 120px;
   width: 110px;
   top: 20px;
@@ -9,7 +9,7 @@
 }
 
 .cover:hover {
-  backgroundColor: rgb(255, 217, 0);
+  background-color: rgb(255, 217, 0);
   transition: all 1s ease-out;
   transform: rotateY(90deg) translate(-110px);
 }

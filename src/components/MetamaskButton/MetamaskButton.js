@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSDK } from '@metamask/sdk-react';
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -48,9 +48,9 @@ function MetamaskButton() {
       trigger('statusChange', 'connected');
       getAccount();
       setConnection(chainId,provider);
-      return (<div style={{'backgroundColor': 'white'}}>
-        <p>Connected account {account} on chain ID {chainId} (if you change network, you must reload web)</p>
-        <p>Goerli <a href='https://goerlifaucet.com/' target='_blanks'>faucet</a> if you need test gas</p>
+      return (<div style={{'backgroundColor': 'white', 'padding': '5px','margin-bottom': '5px', 'borderRadius': '3px'}}>
+        <p style={{'margin': '1px'}}>Connected account {account} on chain {((chainId) => {const net = {'0x5':'Goerli','0x89':'Polygon mainnet'}; return net[chainId]})(chainId)} (if you change network, you must reload web)</p>
+        <p style={{'margin': '1px'}}>Goerli <a href='https://goerlifaucet.com/' target='_blanks'>faucet</a> if you need test gas</p>
         </div>)
     }
     return (<div style={{'backgroundColor': 'white'}}>Please connect to goerli for test or polygon for use</div>)

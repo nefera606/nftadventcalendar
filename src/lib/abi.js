@@ -10,11 +10,6 @@ exports.abi =[
 				"internalType": "string",
 				"name": "symbol_",
 				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_pdr",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -112,12 +107,12 @@ exports.abi =[
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_amount_n",
+				"name": "_amount_c",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "_amount_e",
+				"name": "_amount_s",
 				"type": "uint256"
 			},
 			{
@@ -132,6 +127,32 @@ exports.abi =[
 			}
 		],
 		"name": "mintRound",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -254,27 +275,21 @@ exports.abi =[
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "amount_e",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
 			}
 		],
-		"stateMutability": "view",
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "amount_e_round",
+		"inputs": [],
+		"name": "amount_e",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -299,46 +314,8 @@ exports.abi =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "amount_n_round",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "amount_p",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "amount_p_round",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -487,6 +464,19 @@ exports.abi =[
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "COMMON",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -532,25 +522,6 @@ exports.abi =[
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "ipfsRound",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "owner",
 				"type": "address"
@@ -574,19 +545,6 @@ exports.abi =[
 	},
 	{
 		"inputs": [],
-		"name": "lastDate",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "name",
 		"outputs": [
 			{
@@ -600,12 +558,12 @@ exports.abi =[
 	},
 	{
 		"inputs": [],
-		"name": "NORMAL",
+		"name": "owner",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "address",
 				"name": "",
-				"type": "uint256"
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -638,6 +596,45 @@ exports.abi =[
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "roundInfo",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount_c",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount_s",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount_p",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "roundSupply",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "imageUri",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",

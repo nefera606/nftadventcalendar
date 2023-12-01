@@ -14,8 +14,8 @@ import Dialog from '@mui/material/Dialog';
 
 function AdvientGallery() {
 
-  const baseDate = new Date(2023, 10, 25, 17)
-  const endDate = new Date(2023, 10, 26, 17)
+  const baseDate = new Date(2023, 11, 1, 17)
+  const endDate = new Date(2023, 11, 24, 17)
 
   const [ claimable, setClaimable] = useState(false);
   const [ randomList, setRandomList ] = useState([]);
@@ -33,7 +33,7 @@ function AdvientGallery() {
       const base = Array.from({ length: differenceInCalendarDays(
         endDate,
         baseDate
-      )+1}, (v, i) => i)
+        )+1}, (v, i) => i)
       const randomList = Array.from({length: base.length}, () => {
         let index = Math.floor(Math.random() * base.length)
         let value = base[index];
@@ -64,7 +64,6 @@ function AdvientGallery() {
         statuses.push(status);
         borders.push(border);
       }
-      
       const getImage = (round, status) => {
         if(round > currentRound) {
           return "/notClaimed.png";
@@ -72,7 +71,8 @@ function AdvientGallery() {
         if(round === currentRound && !status){
           return "/notClaimed.png";
         }
-        return `/${uris[round]}.png`;
+        //return `/${uris[round]}.png`;
+        return uris[round];
       }
 
       const getClass = (round,status,border) => {
@@ -115,27 +115,33 @@ function AdvientGallery() {
   }, [claimable, randomList]);
 
   const handleClaim = async (nft, index) => {
-    let currentRound = differenceInCalendarDays(
-      Date.now(),
-      baseDate
-    );
-    if(nft.nftClaimed === false && nft.nftRound <= currentRound)
-    {
-      await claim(setClaimable, nft.nftRound);
-      let uri = await getRoundUri(nft.nftRound);
-      let border = await getBorder(nft.nftRound);
-      nft.nftClaimed = true;
-      nft.nftImage = uri;
-      nft.nftBorder = border;
-      let _nftList = [...nftList];
-      _nftList[index] = nft;
-      setNftList(_nftList);
-    }
-    if(nft.nftClaimed) {
-      let bordersType = ['modalImage','modalImage-e','modalImage-p']
-      setModalClass(bordersType[nft.nftBorder])
-      setModalImage(nft.nftImage);
-      setOpen(true);
+    try{
+      let currentRound = differenceInCalendarDays(
+        Date.now(),
+        baseDate
+        );
+        if(nft.nftClaimed === false && nft.nftRound <= currentRound)
+        {
+          await claim(setClaimable, nft.nftRound);
+          let uri = await getRoundUri(nft.nftRound);
+          let border = await getBorder(nft.nftRound);
+          nft.nftClaimed = true;
+          nft.nftImage = uri;
+          nft.nftBorder = border;
+          let _nftList = [...nftList];
+          _nftList[index] = nft;
+          setNftList(_nftList);
+        }
+        console.log(nft)
+        console.log(index)
+        if(nft.nftClaimed) {
+          let bordersType = ['modalImage','modalImage-e','modalImage-p']
+          setModalClass(bordersType[nft.nftBorder])
+          setModalImage(nft.nftImage);
+          setOpen(true);
+        }
+    } catch (e) {
+      window.alert(`${e.message}`)
     }
   }
 
@@ -149,9 +155,9 @@ function AdvientGallery() {
           <img class={modalClass} src={modalImage}></img>
         </div>
       </Dialog>
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container spacing={{ xs: 2, sm: 2, md: 2 }} columns={{ xs: 4, sm: 4, md: 12 }}>
         {nftList.map((_, index) => (
-        <Grid item xs={2} sm={4} md={2} key={index} >
+        <Grid item xs={4} sm={2} md={3} key={index} >
           <Container class="dateLabel">
             <GradeIcon></GradeIcon>
             <p>{_.nftFormatDate}</p>
