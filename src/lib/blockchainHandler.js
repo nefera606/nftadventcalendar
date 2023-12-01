@@ -16,16 +16,18 @@ const NftAddress = {
 }
 
 
-const loadBlockChain = async (setData) => {
+const loadBlockChain = async (setData, nftRound) => {
   try{
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
     const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
     const nftBalance = await nft.methods.balanceOf(accounts[0]).call()
     const nftRounds = await nft.methods.rounds().call()
-    const amount_n = await nft.methods.amount_n().call()
-    const amount_e = await nft.methods.amount_e().call()
-    const amount_p = await nft.methods.amount_p().call()
+    const roundInfo = await nft.methods.roundInfo(nftRound).call();
+    console.log(roundInfo);
+    const amount_n = roundInfo['0']
+    const amount_e = roundInfo['1']
+    const amount_p = roundInfo['2']
     const nftDailySupply = Number(amount_n) + Number(amount_e) + Number(amount_p);
     setData({
       Balance: web3.utils.toNumber(nftBalance),

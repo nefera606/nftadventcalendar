@@ -22,7 +22,10 @@ function TodayNftCounter(props) {
   useEffect(() => {
     const load = async () => {
       console.log("Loading web3 connection")
-      await loadBlockChain(setdata)
+      await loadBlockChain(setdata, differenceInCalendarDays(
+        Date.now(),
+        baseDate
+        ))
     }
     load();
   }, [props]);
