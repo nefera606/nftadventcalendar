@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { loadBlockChain } from '../../lib/blockchainHandler';
 import { on } from "../../lib/events";
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import './TodayNftCounter.css';
 
 function TodayNftCounter(props) {
-
+  const baseDate = new Date(2023, 11, 1, 17)
+  const endDate = new Date(2023, 11, 24, 17)
+  
   const [data, setdata] = useState({
     Balance: null,
     Total: null,
@@ -13,6 +16,8 @@ function TodayNftCounter(props) {
     ESupply: null,
     GSupply: null
   })
+
+  
 
   useEffect(() => {
     const load = async () => {
@@ -26,7 +31,10 @@ function TodayNftCounter(props) {
     <div style={{'width': '80%'}}>
     <p style={{'margin': '2px'}}>This the NFT Calendar, everyday until christmas you can claim an NFT to complete your calendar!</p>
     <p style={{'margin': '2px'}}>Each day you will have 100 tokens to be claimed, be fast or you will miss it!</p>
-     <p style={{'margin': '2px'}}>You have claim <b>{data.Balance}</b> of <b>{data.Total}</b></p>
+     <p style={{'margin': '2px'}}>You have claim <b>{data.Balance}</b> of <b>{Math.min(data.Total, differenceInCalendarDays(
+    Date.now(),
+    baseDate
+    ))+1}</b></p>
      <p style={{'margin': '2px'}}>Daily available tokens:  <b>{data.DailySupply} ({data.NSupply}N / {data.ESupply}E / {data.GSupply}P)</b></p>
      <p style={{'margin': '2px'}}>Remeber, you can receive one of three class of token when you claim:</p>
       <p style={{'margin': '2px'}}>Common ={'>'} Black border {'('}60 per day{')'}</p>
