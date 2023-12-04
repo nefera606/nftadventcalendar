@@ -31,7 +31,7 @@ function TodayNftCounter(props) {
   }, [props]);
 
   return (<div class='counter'>
-    <div style={{'width': '80%'}}>
+    <div style={{'width': '100%'}}>
     <p style={{'margin': '2px'}}>This the NFT Calendar, everyday until christmas you can claim an NFT to complete your calendar!</p>
     <p style={{'margin': '2px'}}>Each day you will have 100 tokens to be claimed, be fast or you will miss it!</p>
      <p style={{'margin': '2px'}}>You have claim <b>{data.Balance}</b> of <b>{Math.min(data.Total, differenceInCalendarDays(

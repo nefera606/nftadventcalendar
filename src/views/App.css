@@ -8,5 +8,6 @@
   margin-right: auto;
   width: 95%;
   height: auto;
+  max-width: 1400px;
   background-color: rgba(163, 163, 163, 0.45);
 }
