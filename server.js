@@ -38,7 +38,7 @@ const jsons =   [{
   "external_url":"https://criptoadviento.net",
   "attributes":[],
   "description": "Generated Christmas image for the 5th day of December",
-  "image": "https://criptoadviento.net/DIA_5.png"
+  "image": "https://criptoadviento.net/DIA_5.jpg"
 },
 {
   "name": "6th of December",
@@ -182,7 +182,8 @@ const borderType = {
 
 const providerUrl = 'https://polygon-mainnet.infura.io/v3/c77d171eeabf4d8f94803326931f0184'; // Reemplaza con tu URL de Infura
 const contract = '0x18f808e072d09bEE48429C3504e452d6AfFb50ee';
-const MEMORY_PATH = '/app/claimedTokens.json'
+//const MEMORY_PATH = '/app/claimedTokens.json'
+const MEMORY_PATH = './claimedTokens.json'
 let memory;
 
 const app = express()
@@ -194,6 +195,9 @@ app.use(express.static(path.join(__dirname, 'build')))
 app.get('/', function(req, res) {
   res.send('Get ready for OpenSea!');
 })
+app.get('/api/token/list', function(req, res) {
+  res.send(memory);
+})
 
 app.get('/api/token/:token_id', async function(req, res) {
   try {
@@ -201,17 +205,24 @@ app.get('/api/token/:token_id', async function(req, res) {
     let nftBorder
     let nftRound
     // Definir la URL del proveedor (por ejemplo, Infura)
-    if(memory[req.params.token_id]){
+    if(memory[req.params.token_id]) {
+      console.log('Taking from memory')
       nftBorder = memory[req.params.token_id].border
       nftRound = memory[req.params.token_id].round
     } else {
+      console.log('Taking from blockchain')
       const provider = new ethers.JsonRpcProvider(providerUrl);
       const nft = new ethers.Contract(contract, abi.abi, provider);
+      let supply = await nft.totalSupply();
+      if(req.params.token_id >= Number(supply.toString())) {
+        res.status(404).send()
+        return 0
+      }
       nftBorder = await nft.borderToken(req.params.token_id);
       nftRound = await nft.tokenInRound(req.params.token_id);
       memory[req.params.token_id] = {
-        border: nftBorder,
-        round: nftRound
+        border: nftBorder.toString(),
+        round: nftRound.toString()
       }
       fs.writeFileSync(MEMORY_PATH,JSON.stringify(memory));
     }
@@ -225,6 +236,7 @@ app.get('/api/token/:token_id', async function(req, res) {
     }
     res.send(response)
   } catch(e) {
+    console.log(e.message)
     res.status(400).send()
   }
 })

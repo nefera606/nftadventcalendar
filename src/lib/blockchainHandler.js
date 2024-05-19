@@ -64,20 +64,23 @@ const getBorder = async (round) => {
 }
 
 const claim = async (round) => {
+  console.log(`Claiming round: ${round}`)
   const web3 = new Web3(window.ethereum);
   const nft = new web3.eth.Contract(abi, NftAddress[chainId]);
   const accounts = await web3.eth.getAccounts();
-  console.log(`${round}`)
   try {
-    await nft.methods.claim(web3.utils.toBigInt(`${round}`)).send({
+    let tx = await nft.methods.claim(web3.utils.toBigInt(`${round}`)).send({
       from: accounts[0],
       data: nft.methods.claim(web3.utils.toBigInt(`${round}`)).encodeABI()
     })
-    .on('receipt', async (receipt) => {
-      const tokenId = await nft.methods.claimedPerRound(round, accounts[0]).call()
-      trigger('claimed', tokenId);
-    });
+    console.log(`Transaction for claim${tx}`)
+    await tx.wait(2);
+    // .on('receipt', async (receipt) => {
+    //   const tokenId = await nft.methods.claimedPerRound(round, accounts[0]).call()
+    //   trigger('claimed', tokenId);
+    // });
   } catch(e) {
+    console.log(`When claiming: ${e}`)
     console.log(e.error.message)
     throw new Error(e.error.message);
   }
@@ -114,6 +117,9 @@ const claimedPerRound = async (round) => {
   }
 }
 
+const getNftAddress = () => {
+  return NftAddress[chainId];
+}
 
 
 export {
@@ -123,5 +129,6 @@ export {
   claimed,
   claim,
   getTokenUri,
-  claimedPerRound
+  claimedPerRound,
+  getNftAddress
 };

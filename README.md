@@ -72,3 +72,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 docker tag local-image:tagname new-repo:tagname
 docker push new-repo:tagname
+
+docker pull nefera606/adventcalendarfront:latest;docker rm -f $(docker ps -aq);docker run -p 80:80 -d nefera606/adventcalendarfront;

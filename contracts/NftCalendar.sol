@@ -54,6 +54,44 @@ contract NftCalendar is ERC721, Ownable {
         _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
         // 5th december
         _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 6th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 7th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 8th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 9th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 10th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 11th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 12th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 13th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 14th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 15th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 16th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 17th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 18th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 19th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 20th december
+        _mintRound(60,30,10,"https://criptoadviento.net/api/token/");
+        // 21th december
+        _mintRound(61,31,10,"https://criptoadviento.net/api/token/");
+        // 22th december
+        _mintRound(62,32,10,"https://criptoadviento.net/api/token/");
+        // 23th december
+        _mintRound(63,33,10,"https://criptoadviento.net/api/token/");
+        // 24th december
+        _mintRound(63,33,10,"https://criptoadviento.net/api/token/");
     }
 
     // Moved to new contract
@@ -134,54 +172,21 @@ contract NftCalendar is ERC721, Ownable {
         return borderType[tokenId];
     }
 
-    function canClaim (address owner) public view returns(bool) {
-        bool claimable = false;
-        if (claimedPerRound[rounds][owner] != 0) {
-            claimable = true;
-        }
-        return claimable;
-    }
-
     function claimed (uint256 round, address owner) public view returns(bool) {
         bool claimable = false;
+        if (ownerOf(0) == owner && round == 0) {
+            claimable = true;
+        }
         if (claimedPerRound[round][owner] != 0) {
             claimable = true;
         }
         return claimable;
     }
 
-    // Info retrieve, missmatch for compatibility
-    function availableRoundSupply () public view returns(uint256) {
-        return roundInfo[rounds-1].roundSupply;
-    }
-
-    function amount_e () public view returns(uint256) {
-        return roundInfo[rounds-1].amount_s;
-    }
-
-    function amount_n () public view returns(uint256) {
-        return roundInfo[rounds-1].amount_c;
-    }
-
-    function amount_p () public view returns(uint256) {
-        return roundInfo[rounds-1].amount_p;
-    }
-
-    function _baseURI() internal pure override returns (string memory) {
-        return "";
-    }
-
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         _requireMinted(tokenId);
         string memory baseURI = _baseURI();
-        string memory uri = string(abi.encodePacked(roundURI(tokenInRound[tokenId]), tokenId.toString()));
+        string memory uri = string(abi.encodePacked(roundInfo(tokenInRound[tokenId]).imageUri, tokenId.toString()));
         return uri;
-    }
-
-    function roundURI(uint256 round) public view returns (string memory) {
-        string memory baseURI = _baseURI();
-        string memory ipfs = roundInfo[round].imageUri;
-        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, ipfs)) : ipfs;
-    }
-   
+    }   
 }

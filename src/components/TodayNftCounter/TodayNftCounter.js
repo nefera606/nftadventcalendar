@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { loadBlockChain } from '../../lib/blockchainHandler';
-import { on } from "../../lib/events";
+import { loadBlockChain, getNftAddress } from '../../lib/blockchainHandler';
+import { trigger } from "../../lib/events";
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import './TodayNftCounter.css';
 
@@ -44,6 +44,7 @@ function TodayNftCounter(props) {
       <p style={{'margin': '2px'}}>Special ={'>'} Blue border {'('}30 per day{')'}</p>
       <p style={{'margin': '2px'}}>Pro ={'>'} Orange border {'('}10 per day{')'}</p>
       <p style={{'margin': '2px'}}>Find yours today and Merry Christmas!</p>
+      <p style={{'margin': '2px'}}>The contract address is {getNftAddress()}</p>
       <p style={{'margin': '2px'}}>Donations to 0xadbDcFFD19A3bf5896a958D479E2B6D828dB1bb8 will be apreciated and dedicated for social projects</p>
     </div>
     <div style={{'marginRigth': '2px', 'alignContent':'right'}}>
